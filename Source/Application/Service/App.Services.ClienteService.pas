@@ -14,9 +14,9 @@ type
   TClienteService = class
   private
     FClientRepo: IClienteRepository;
-    function CreateDocumento(const ADocStr: string): IDocumento; overload;
   public
     constructor Create(AClientRepo: IClienteRepository);
+    function CreateDocumento(const ADocStr: string): IDocumento; overload;
     procedure AddCliente(const ANome: string; const ADocStr: string; AIdCidade: Integer);
   end;
 
