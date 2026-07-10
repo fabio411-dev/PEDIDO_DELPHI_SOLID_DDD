@@ -11,6 +11,7 @@ uses
   FireDAC.Comp.Client,
   FireDAC.Comp.DataSet,
   Domain.Interfaces.IPedidoRepository,
+  Infra.Data.Repositories.ClienteRepository,
   Domain.Entities.Pedido,
   Domain.Entities.PedidoItem,
   Domain.Entities.Produto,
@@ -20,13 +21,14 @@ type
   TPedidoRepository = class(TInterfacedObject, IPedidoRepository)
   private
     FConnection: TFDConnection;
+    objClienteRepo : TClienteRepository;
     function GetNextId(const AGenName: string): Integer;
     function GetProductById(AId: Integer): TProduto;
   public
     constructor Create(AConnection: TFDConnection);
     destructor Destroy; override;
     function FindById(AId: Integer): TPedido;
-    function FindAll: TObjectList<TPedido>;
+    function FindAll(APartialDesc : String): TObjectList<TPedido>;
     procedure Add(const APedido: TPedido);
     procedure Update(const APedido: TPedido);
     procedure Delete(AId: Integer);
@@ -38,6 +40,8 @@ constructor TPedidoRepository.Create(AConnection: TFDConnection);
 begin
   inherited Create;
   FConnection := AConnection;
+
+  objClienteRepo := TClienteRepository.Create(FConnection);
 end;
 
 destructor TPedidoRepository.Destroy;
@@ -109,6 +113,11 @@ begin
 
       objPedido.DataPedido  := qryAux.FieldByName('DATA_PEDIDO').AsDateTime;
 
+      if qryAux.FieldByName('IDPESSOA').AsInteger > 0 then
+      begin
+        objPedido.Cliente  := objClienteRepo.FindById( qryAux.FieldByName('IDPESSOA').AsInteger);
+      end;
+
       qryAuxItem := TFDQuery.Create(nil);
       try
         qryAuxItem.Connection := FConnection;
@@ -146,7 +155,7 @@ begin
   end;
 end;
 
-function TPedidoRepository.FindAll: TObjectList<TPedido>;
+function TPedidoRepository.FindAll(APartialDesc : String): TObjectList<TPedido>;
 var
   qryAux: TFDQuery;
 begin
@@ -154,7 +163,10 @@ begin
   qryAux := TFDQuery.Create(nil);
   try
     qryAux.Connection := FConnection;
-    qryAux.SQL.Text := 'SELECT IDPEDIDO FROM PEDIDO';
+    qryAux.SQL.Text := 'SELECT IDPEDIDO                                         '+
+                       '  FROM PEDIDO                                           '+
+                       ' INNER JOIN PESSOA ON PESSOA.IDPESSOA = PEDIDO.IDPESSOA '+
+                       ' WHERE NOME LIKE ''%' + APartialDesc + '%''             ';
     qryAux.Open;
 
     while not qryAux.Eof do
