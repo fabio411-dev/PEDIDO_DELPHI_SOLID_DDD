@@ -22,6 +22,7 @@ Pedidos simples em Delphi utilizando SOLID + DDD
 - Executar os Scripts de Criação de DOMAINS e TABLES da Pasta DB deste projeto
 - Opcional : Script de dados default V00003
 - Configurar conexão no arquivo de exemplo **config.ini** na raiz do projeto.
+- Copiar este arquivo **config.ini** para a mesma pasta do EXE
 
 
 ## Compilação / Execução
