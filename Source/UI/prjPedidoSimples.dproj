@@ -84,6 +84,8 @@
         <DCC_RemoteDebug>false</DCC_RemoteDebug>
         <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
         <AppEnableHighDPI>true</AppEnableHighDPI>
+        <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
+        <VerInfo_Locale>1033</VerInfo_Locale>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2)'!=''">
         <DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>
@@ -100,7 +102,7 @@
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
         <DCCReference Include="uPrincipal.pas">
-            <Form>Form1</Form>
+            <Form>FPrincipal</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="..\Infrastructure\Persistence\Firebird\uDMConexao.pas">
@@ -108,6 +110,46 @@
             <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
+        <DCCReference Include="..\Domain\ValueObjects\Domain.ValueObjects.CPF.pas"/>
+        <DCCReference Include="..\Domain\ValueObjects\Domain.ValueObjects.Cnpj.pas"/>
+        <DCCReference Include="..\Domain\Entities\Domain.Entities.Produto.pas"/>
+        <DCCReference Include="..\Domain\ValueObjects\Domain.ValueObjects.UnidadeMedida.pas"/>
+        <DCCReference Include="..\Domain\ValueObjects\Domain.ValueObjects.IDocumento.pas"/>
+        <DCCReference Include="uProduto.pas">
+            <Form>FProduto</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="uCliente.pas">
+            <Form>FCliente</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="uPedido.pas">
+            <Form>FPedido</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="..\Domain\ValueObjects\Domain.ValueObjects.UnidadeFederativa.pas"/>
+        <DCCReference Include="..\Domain\ValueObjects\Domain.ValueObjects.Cidade.pas"/>
+        <DCCReference Include="..\Domain\Entities\Domain.Entities.Cliente.pas"/>
+        <DCCReference Include="..\Domain\Entities\Domain.Entities.PedidoItem.pas"/>
+        <DCCReference Include="..\Domain\Entities\Domain.Entities.Pedido.pas"/>
+        <DCCReference Include="..\Domain\Interfaces\Domain.Interfaces.IClienteRepository.pas"/>
+        <DCCReference Include="..\Domain\Interfaces\Domain.Interfaces.IProdutoRepository.pas"/>
+        <DCCReference Include="..\Domain\Interfaces\Domain.Interfaces.IPedidoRepository.pas"/>
+        <DCCReference Include="..\Infrastructure\Data\Repository\Infra.Data.Repositories.ClienteRepository.pas"/>
+        <DCCReference Include="..\Infrastructure\Data\Repository\Infra.Data.Repositories.ProdutoRepository.pas"/>
+        <DCCReference Include="..\Infrastructure\Data\Repository\Infra.Data.Repositories.PedidoRepository.pas"/>
+        <DCCReference Include="..\Application\Service\App.Services.ClienteService.pas"/>
+        <DCCReference Include="..\Application\Service\App.Services.PedidoService.pas"/>
+        <DCCReference Include="..\Infrastructure\Data\Control\Infra.Data.Control.ProdutoControl.pas"/>
+        <DCCReference Include="..\Domain\Interfaces\Domain.Interfaces.IUnidadeMedidaRepository.pas"/>
+        <DCCReference Include="..\Infrastructure\Data\Repository\Infra.Data.Repositories.UnidadeMedidaRepository.pas"/>
+        <DCCReference Include="..\Application\Service\App.Services.UnidadeMedidaService.pas"/>
+        <DCCReference Include="..\Infrastructure\Data\Control\Infra.Data.Control.UnidadeMedidaControl.pas"/>
+        <DCCReference Include="..\Infrastructure\Data\Control\Infra.Data.Control.ClienteControl.pas"/>
+        <DCCReference Include="..\Domain\Interfaces\Domain.Interfaces.ICidadeRepository.pas"/>
+        <DCCReference Include="..\Infrastructure\Data\Repository\Infra.Data.Repositories.CidadeRepository.pas"/>
+        <DCCReference Include="..\Infrastructure\Data\Control\Infra.Data.Control.CidadeControl.pas"/>
+        <DCCReference Include="..\Infrastructure\Data\Control\Infra.Data.Control.PedidoControl.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
@@ -128,6 +170,13 @@
                 <Source>
                     <Source Name="MainSource">prjPedidoSimples.dpr</Source>
                 </Source>
+                <Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\NFSeConverter_D10T.bpl">File c:\program files (x86)\embarcadero\studio\19.0\bin\NFSeConverter_D10T.bpl not found</Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\spdNotaSegura_D10T.bpl">File c:\program files (x86)\embarcadero\studio\19.0\bin\spdNotaSegura_D10T.bpl not found</Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\spdGov16_D10T.bpl">File c:\program files (x86)\embarcadero\studio\19.0\bin\spdGov16_D10T.bpl not found</Excluded_Packages>
+                    <Excluded_Packages Name="C:\Users\Public\Documents\Embarcadero\Studio\19.0\Bpl\BuildRT.bpl">File C:\Users\Public\Documents\Embarcadero\Studio\19.0\Bpl\BuildRT.bpl not found</Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\dclofficexp250.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
+                </Excluded_Packages>
             </Delphi.Personality>
             <Deployment Version="3">
                 <DeployFile LocalName="Win32\Debug\prjPedidoSimples.exe" Configuration="Debug" Class="ProjectOutput">
@@ -556,6 +605,7 @@
                 <Platform value="Win32">True</Platform>
                 <Platform value="Win64">False</Platform>
             </Platforms>
+            <ModelSupport>False</ModelSupport>
         </BorlandProject>
         <ProjectFileVersion>12</ProjectFileVersion>
     </ProjectExtensions>
