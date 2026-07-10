@@ -25,7 +25,7 @@ type
     constructor Create(AConnection: TFDConnection);
     destructor Destroy; override;
     function FindById(AId: Integer): TCliente;
-    function FindAll: TObjectList<TCliente>;
+    function FindAll(APartialDesc : String): TObjectList<TCliente>;
     procedure Add(const ACliente: TCliente);
     procedure Update(const ACliente: TCliente);
     procedure Delete(AId: Integer);
@@ -84,7 +84,7 @@ begin
   end;
 end;
 
-function TClienteRepository.FindAll: TObjectList<TCliente>;
+function TClienteRepository.FindAll(APartialDesc : String): TObjectList<TCliente>;
 var
   qryAux: TFDQuery;
 begin
@@ -93,7 +93,8 @@ begin
   try
     qryAux.Connection := FConnection;
     qryAux.SQL.Text := 'SELECT IDPESSOA, IDCIDADE, NOME, CPF, CNPJ '+
-                       '  FROM PESSOA                              ';
+                       '  FROM PESSOA                              '+
+                       ' WHERE NOME LIKE ''%' + APartialDesc + '%''';
     qryAux.Open;
 
     while not qryAux.Eof do

@@ -23,7 +23,7 @@ type
     constructor Create(AConnection: TFDConnection);
     destructor Destroy; override;
     function FindById(AId: Integer): TProduto;
-    function FindAll: TObjectList<TProduto>;
+    function FindAll(APartialDesc : String): TObjectList<TProduto>;
     procedure Add(const AProduto: TProduto);
     procedure Update(const AProduto: TProduto);
     procedure Delete(AId: Integer);
@@ -100,7 +100,7 @@ begin
   end;
 end;
 
-function TProdutoRepository.FindAll: TObjectList<TProduto>;
+function TProdutoRepository.FindAll(APartialDesc : String): TObjectList<TProduto>;
 var
   qryAux: TFDQuery;
   objProduto : TProduto;
@@ -110,7 +110,8 @@ begin
   try
     qryAux.Connection := FConnection;
     qryAux.SQL.Text := 'SELECT IDPRODUTO, IDUNIDADE, DESCRICAO, PRECO_VENDA '+
-                       '  FROM PRODUTO                                      ';
+                       '  FROM PRODUTO                                      '+
+                       ' WHERE DESCRICAO LIKE ''%' + APartialDesc + '%''';
     qryAux.Open;
 
     while not qryAux.Eof do
